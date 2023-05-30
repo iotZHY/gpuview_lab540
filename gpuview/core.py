@@ -8,6 +8,7 @@ Core functions of gpuview.
 import os
 import json
 import subprocess
+import socket
 try:
     from urllib.request import urlopen
 except ImportError:
@@ -39,20 +40,28 @@ def my_gpustat():
     try:
         from gpustat import GPUStatCollection
         stat = GPUStatCollection.new_query().jsonify()
+        ip = get_host_ip() # 查询ip
         delete_list = []
         for gpu_id, gpu in enumerate(stat['gpus']):
             if type(gpu['processes']) is str:
                 delete_list.append(gpu_id)
                 continue
+
+            gpu['ip'] = ip
             gpu['memory'] = round(float(gpu['memory.used']) /
                                   float(gpu['memory.total']) * 100)
+
             if SAFE_ZONE:
                 gpu['users'] = len(set([p['username']
                                         for p in gpu['processes']]))
+                processes = []
+                for p in gpu['processes']:
+                    if 'python' == p['command']:
+                        processes.append(p)
                 user_process = [
                     '%s(%s,%sM)' % (p['username'],
                                     p['command'], p['gpu_memory_usage'])
-                    for p in gpu['processes']
+                    for p in processes
                 ]
                 gpu['user_processes'] = ' '.join(user_process)
             else:
@@ -79,6 +88,20 @@ def my_gpustat():
         return stat
     except Exception as e:
         return {'error': '%s!' % getattr(e, 'message', str(e))}
+
+
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+        return ip
 
 
 def all_gpustats():
