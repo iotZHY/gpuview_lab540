@@ -3,7 +3,7 @@
 echo 'Install gpuview service:'
 
 user=$USER
-path=$(which gpuview)
+path=/home/${user}/gpuview_lab540/gpuview
 
 echo ''
 echo 'Installing supervisor...'
@@ -19,7 +19,7 @@ sudo echo "[program:gpuview]
 user = ${user}
 environment = HOME=\"/home/${user}\",USER=\"${user}\"
 directory = /home/${user}
-command = ${path} run ${1}
+command = python ${path}/app.py run ${1}
 autostart = true
 autorestart = true
 stderr_logfile = ${log_path}/stderr.log
