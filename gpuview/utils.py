@@ -8,8 +8,9 @@ Utility functions for gpuview.
 import argparse
 
 from gpustat import __version__ as __gpustat__
-from . import __version__
-
+# from . import __version__
+version_info = (0, 4, 0)
+__version__ = '.'.join(str(c) for c in version_info)
 
 class _HelpAction(argparse._HelpAction):
 
