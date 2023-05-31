@@ -14,9 +14,9 @@ from datetime import datetime
 from flask import redirect, url_for, render_template, request, Flask, jsonify
 from flask_login import LoginManager, login_required, logout_user, login_user, current_user
 
-from . import utils
-from . import core
-from . import login
+import utils
+import core
+from login import *
 
 abs_path = os.path.dirname(os.path.realpath(__file__))
 abs_views_path = os.path.join(abs_path, 'views')
@@ -36,11 +36,11 @@ def login():
     if request.method == 'POST':
         user_name = request.form.get('username')
         password = request.form.get('password')
-        user_info = login.get_user(user_name)  # 从用户数据中查找用户记录
+        user_info = get_user(user_name)  # 从用户数据中查找用户记录
         if user_info is None:
             emsg = "用户名或密码密码有误"
         else:
-            user = login.User(user_info)  # 创建用户实体
+            user = User(user_info)  # 创建用户实体
             if user.verify_password(password):  # 校验密码
                 login_user(user)  # 创建用户 Session
                 return redirect(request.args.get('next') or url_for('index'))
@@ -51,7 +51,7 @@ def login():
 
 @login_manager.user_loader  # 定义获取登录用户的方法
 def load_user(user_id):
-    return login.User.get(user_id)
+    return User.get(user_id)
 
 @app.route('/logout')  # 登出
 @login_required

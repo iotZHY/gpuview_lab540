@@ -37,12 +37,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/gpuview/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/gpuview" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Code\gpuview_lab540\gpuview\views" />
       <recent name="D:\Code\gpuview_lab540\gpuview" />
+      <recent name="D:\Code\gpuview_lab540\gpuview\views" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app">
@@ -104,7 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1685456341768</updated>
       <workItem from="1685456343270" duration="651000" />
-      <workItem from="1685457877921" duration="3731000" />
+      <workItem from="1685457877921" duration="4922000" />
     </task>
     <servers />
   </component>
