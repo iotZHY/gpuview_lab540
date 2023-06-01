@@ -22,8 +22,6 @@ abs_path = os.path.dirname(os.path.realpath(__file__))
 abs_views_path = os.path.join(abs_path, 'views')
 app = Flask(__name__, template_folder=abs_views_path)
 
-EXCLUDE_SELF = False  # Do not report to `/gpustat` calls.
-
 
 app.secret_key = 'abc'
 login_manager = LoginManager()  # 实例化登录管理对象
@@ -79,11 +77,7 @@ def report_gpustat():
             return obj.isoformat()
         else:
             raise TypeError(type(obj))
-
-    if EXCLUDE_SELF:
-        resp = {'error': 'Excluded self!'}
-    else:
-        resp = core.my_gpustat()
+    resp = core.my_gpustat()
     return jsonify(resp)
 
 
@@ -93,8 +87,7 @@ def main():
 
     if 'run' == args.action:
         core.safe_zone(args.safe_zone)
-        global EXCLUDE_SELF
-        EXCLUDE_SELF = args.exclude_self
+        core.exclude_self(args.exclude_self)
         app.run(host=args.host, port=args.port, debug=args.debug)
     elif 'service' == args.action:
         core.install_service(host=args.host,
