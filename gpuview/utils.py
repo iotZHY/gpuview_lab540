@@ -42,7 +42,7 @@ def arg_parser():
     base_parser.add_argument('--port', default=9988,
                              help="Port number of host (default: 9988)")
     base_parser.add_argument('--safe-zone', action='store_true',
-                             help="Report all details including usernames")
+                             help="Report all details including usernames", default=True)
     base_parser.add_argument('--exclude-self', action='store_true',
                              help="Don't report to others but self-dashboard")
 
