@@ -21,7 +21,7 @@ SAFE_ZONE = False  # Safe to report all details.
 EXCLUDE_SELF = False  # Do not report self.
 
 
-def safe_zone(safe=False):
+def safe_zone(safe=True):
     global SAFE_ZONE
     SAFE_ZONE = safe
 
